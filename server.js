@@ -20,13 +20,15 @@ app.use((req, res) => {
   res.status(404).send({ message: 'Not found...' });
 })
 
-app.listen('8000', () => {
+const server = app.listen('8000', () => {
   console.log('Server is running on port: 8000');
 });
 
-
+const devDBString = 'mongodb://localhost:27017/companyDB';
+const testDBString = 'mongodb://localhost:27017/companyDB-test';
+const dbURI = process.env.NODE_ENV === 'test' ? testDBString : devDBString; 
 // connects our backend code with the database
-mongoose.connect('mongodb://localhost:27017/companyDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -34,4 +36,4 @@ db.once('open', () => {
 });
 db.on('error', err => console.log('Error ' + err));
 
-
+module.exports = server;

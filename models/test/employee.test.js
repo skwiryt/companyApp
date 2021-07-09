@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const { expect } = require('chai');
 
 describe('Employee', () => {
+  //Zerowanie modelu jest ze względu na mocha --watch.
+  //Ponieważ przeszliśmy na onchange, to można by to skasować.
   after(() => {
     mongoose.models = {};
   });
